@@ -1,0 +1,12 @@
+---
+title: "Pete's Project Homepage"
+author: "Pete Crump"
+date: "11/26/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Welcome to Pete's class page!
