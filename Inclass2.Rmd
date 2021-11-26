@@ -1,0 +1,21 @@
+---
+title: "Untitled"
+author: "Pete Crump"
+date: "9/16/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+install.packages("palmerpenguins")
+install.packages("here")
+require(palmerpenguins)
+require(here)
+penguins = data.frame(penguins)
+```
+
+
