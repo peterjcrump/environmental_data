@@ -10,3 +10,5 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 Welcome to Pete's class page!
+
+Click [here](docs/final_R_reference.html) for my Final R Reference Document.
