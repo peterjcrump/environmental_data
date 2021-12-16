@@ -1,0 +1,861 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Analysis of Environmental Data - Final Project Part 2},
+  pdfauthor={Pete Crump},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Analysis of Environmental Data - Final Project Part 2}
+\author{Pete Crump}
+\date{12/15/2021}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{require}\NormalTok{(here)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: here
+\end{verbatim}
+
+\begin{verbatim}
+## here() starts at /Users/petecrump/Desktop/Class/Analysis of Environmental Data/environmental_data
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{delomys }\OtherTok{=} \FunctionTok{read.csv}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"delomys.csv"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{numerical-data-exploration}{%
+\subsection{Numerical Data
+Exploration}\label{numerical-data-exploration}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Five{-}number summary of delomys body mass}
+\FunctionTok{summary}\NormalTok{(delomys}\SpecialCharTok{$}\NormalTok{body\_mass)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    5.00   35.00   43.00   44.06   54.00  105.00
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#shapiro tests for normality of body mass and body length}
+\FunctionTok{shapiro.test}\NormalTok{(delomys}\SpecialCharTok{$}\NormalTok{body\_mass)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  delomys$body_mass
+## W = 0.99506, p-value = 4.33e-05
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{shapiro.test}\NormalTok{(delomys}\SpecialCharTok{$}\NormalTok{body\_length)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  delomys$body_length
+## W = 0.87609, p-value < 2.2e-16
+\end{verbatim}
+
+The results of the shapiro-wilk tests for normaility do not suggest that
+the data are normally distributed.
+
+\hypertarget{graphical-data-exploration}{%
+\subsection{Graphical Data
+Exploration}\label{graphical-data-exploration}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\CommentTok{\#scatter plot for body mass and body length}
+\FunctionTok{plot}\NormalTok{(body\_mass }\SpecialCharTok{\textasciitilde{}}\NormalTok{ body\_length, }\AttributeTok{data =}\NormalTok{ delomys,}
+     \AttributeTok{main =} \StringTok{"Delomys Body Mass vs Body Length"}\NormalTok{,}
+     \AttributeTok{ylab =} \StringTok{"Body Mass (g)"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"Body Length (mm)"}\NormalTok{)}
+
+\CommentTok{\#histogram of body mass}
+\FunctionTok{hist}\NormalTok{(delomys}\SpecialCharTok{$}\NormalTok{body\_mass, }\AttributeTok{main =} \StringTok{"Histogram of Delomys Body Mass"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Body Mass (g)"}\NormalTok{)}
+
+\CommentTok{\#histogram of body length}
+\FunctionTok{hist}\NormalTok{(delomys}\SpecialCharTok{$}\NormalTok{body\_length, }\AttributeTok{main =} \StringTok{"Histogram of Delomys Body Length"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Body Length (mm)"}\NormalTok{)}
+
+\CommentTok{\#conditional boxplot of body mass on species}
+\FunctionTok{boxplot}\NormalTok{(body\_mass }\SpecialCharTok{\textasciitilde{}}\NormalTok{ binomial, }\AttributeTok{data =}\NormalTok{ delomys,}
+        \AttributeTok{main =} \StringTok{"Boxplot of Delomys Body Mass Conditioned on Species"}\NormalTok{,}
+        \AttributeTok{xlab =} \StringTok{"Species"}\NormalTok{,}
+        \AttributeTok{ylab =} \StringTok{"Body Mass (g)"}\NormalTok{)}
+
+\CommentTok{\#conditional boxplot of body mass on sex}
+\FunctionTok{boxplot}\NormalTok{(body\_mass }\SpecialCharTok{\textasciitilde{}}\NormalTok{ sex, }\AttributeTok{data =}\NormalTok{ delomys,}
+        \AttributeTok{main =} \StringTok{"Boxplot of Delomys Body Mass Conditioned on Sex"}\NormalTok{,}
+        \AttributeTok{xlab =} \StringTok{"Sex"}\NormalTok{,}
+        \AttributeTok{ylab =} \StringTok{"Body Mass (g)"}\NormalTok{)}
+
+\CommentTok{\#conditional boxplot of body mass on species and sex}
+\FunctionTok{boxplot}\NormalTok{(body\_mass }\SpecialCharTok{\textasciitilde{}}\NormalTok{ binomial }\SpecialCharTok{+}\NormalTok{ sex, }\AttributeTok{data =}\NormalTok{ delomys,}
+        \AttributeTok{main =} \StringTok{"Boxplot of Delomys Body Mass Conditioned on Species and Sex"}\NormalTok{,}
+        \AttributeTok{xlab =} \StringTok{"Species and Sex"}\NormalTok{,}
+        \AttributeTok{ylab =} \StringTok{"Body Mass (g)"}\NormalTok{,}
+        \AttributeTok{names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Female}\SpecialCharTok{\textbackslash{}n}\StringTok{Delomys dorsalis"}\NormalTok{, }\StringTok{"Female}\SpecialCharTok{\textbackslash{}n}\StringTok{Delomys sublineatus"}\NormalTok{, }\StringTok{"Male}\SpecialCharTok{\textbackslash{}n}\StringTok{Delomys dorsalis"}\NormalTok{, }\StringTok{"Male}\SpecialCharTok{\textbackslash{}n}\StringTok{Delomys sublineatus"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{final_dataanalysis_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\hypertarget{q1}{%
+\subsubsection{Q1}\label{q1}}
+
+There is a positive, somewhat linear relationship between delomys body
+mass and length. As body length increases, so does body mass and vice
+versa. It isn't a straight path, rather more curved, but it looks to be
+linear in the parameters as there does not seem to have an increasing
+variance. The presence of a few outliers may change this assessment,
+however it seems to be very consistent despite these few extraneous
+points.
+
+\hypertarget{q2}{%
+\subsubsection{Q2}\label{q2}}
+
+The body mass histogram looks somewhat close to being normally
+distributed. The distribution is skewed to the left, though, as there
+are much more smaller numbers and the distribution seems to drop off
+very sharply on the right side. The histogram for body length does not
+at all look to be normally distributed, though. It is very heavily
+skewed to the left and includes several outliers in th every high
+values.
+
+\hypertarget{q3}{%
+\subsubsection{Q3}\label{q3}}
+
+The appearance of both histograms leads me to believe that neither of
+these datasets are normally distributed. In looking at the results of
+the shapiro tests, as well, this suspicion is confirmed. Both shapiro
+tests returned very low p-values, and since the null hypothesis of the
+shapiro test is that the data is normally distributed, there is strong
+evidence that this is not the case.
+
+\hypertarget{q4}{%
+\subsubsection{Q4}\label{q4}}
+
+In looking at the conditional boxplot for only sex, it appears that
+males have very slightly higher body masses than females. This
+difference is very subtle, however, and is small enough that it may be a
+result of some kind of sampling error. In examining the conditional
+boxplot of body mass on species, it seems that Delomys dorsalis does
+have a higher body mass than Delomys sublineatus. In looking at the
+boxplot of body mass conditioned on both variables, this changes: it's
+clear that males seem to have a higher body mass across both species,
+while there does not seem to be a significant difference in body mass
+between species.
+
+\hypertarget{model-building}{%
+\subsection{Model Building}\label{model-building}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Fit 1: simple linear regression of body length and mass}
+\NormalTok{fit1 }\OtherTok{=} \FunctionTok{lm}\NormalTok{(body\_length }\SpecialCharTok{\textasciitilde{}}\NormalTok{ body\_mass, }\AttributeTok{data =}\NormalTok{ delomys)}
+\FunctionTok{summary}\NormalTok{(fit1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = body_length ~ body_mass, data = delomys)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -48.888  -5.398   0.104   4.859 138.663 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 76.12466    0.91581   83.12   <2e-16 ***
+## body_mass    0.87550    0.01969   44.46   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 11.67 on 1583 degrees of freedom
+## Multiple R-squared:  0.5553, Adjusted R-squared:  0.5551 
+## F-statistic:  1977 on 1 and 1583 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Fit 2: one{-}way ANOVA, body mass and sex}
+\NormalTok{fit2 }\OtherTok{=} \FunctionTok{lm}\NormalTok{(body\_mass }\SpecialCharTok{\textasciitilde{}}\NormalTok{ sex, }\AttributeTok{data =}\NormalTok{ delomys)}
+\FunctionTok{summary}\NormalTok{(fit2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = body_mass ~ sex, data = delomys)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -40.496  -8.711  -0.496   9.504  59.504 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  42.7115     0.5289  80.756  < 2e-16 ***
+## sexmale       2.7841     0.7456   3.734 0.000195 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 14.82 on 1578 degrees of freedom
+##   (5 observations deleted due to missingness)
+## Multiple R-squared:  0.008758,   Adjusted R-squared:  0.00813 
+## F-statistic: 13.94 on 1 and 1578 DF,  p-value: 0.0001951
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Fit 3: one{-}way ANOVA, body mass and species}
+\NormalTok{fit3 }\OtherTok{=} \FunctionTok{lm}\NormalTok{(body\_mass }\SpecialCharTok{\textasciitilde{}}\NormalTok{ binomial, }\AttributeTok{data =}\NormalTok{ delomys)}
+\FunctionTok{summary}\NormalTok{(fit3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = body_mass ~ binomial, data = delomys)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -41.752  -9.069  -0.069   9.248  65.931 
+## 
+## Coefficients:
+##                             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)                  46.7524     0.4500   103.9   <2e-16 ***
+## binomialDelomys sublineatus  -7.6831     0.7605   -10.1   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 14.44 on 1583 degrees of freedom
+## Multiple R-squared:  0.06058,    Adjusted R-squared:  0.05998 
+## F-statistic: 102.1 on 1 and 1583 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Fit 4: two{-}way additive ANOVA, body mass on ssex and species}
+\NormalTok{fit4 }\OtherTok{=} \FunctionTok{lm}\NormalTok{(body\_mass }\SpecialCharTok{\textasciitilde{}}\NormalTok{ sex }\SpecialCharTok{+}\NormalTok{ binomial, }\AttributeTok{data =}\NormalTok{ delomys)}
+\FunctionTok{summary}\NormalTok{(fit4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = body_mass ~ sex + binomial, data = delomys)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -43.866  -8.866  -0.672   8.930  64.328 
+## 
+## Coefficients:
+##                             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)                  45.0704     0.5556  81.114  < 2e-16 ***
+## sexmale                       3.7954     0.7260   5.228 1.94e-07 ***
+## binomialDelomys sublineatus  -8.1935     0.7610 -10.767  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 14.31 on 1577 degrees of freedom
+##   (5 observations deleted due to missingness)
+## Multiple R-squared:  0.07663,    Adjusted R-squared:  0.07546 
+## F-statistic: 65.44 on 2 and 1577 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Fit 5: two{-}way factorial ANOVA, body mass on sex and species}
+\NormalTok{fit5 }\OtherTok{=} \FunctionTok{lm}\NormalTok{(body\_mass }\SpecialCharTok{\textasciitilde{}}\NormalTok{ sex }\SpecialCharTok{*}\NormalTok{ binomial, }\AttributeTok{data =}\NormalTok{ delomys)}
+\FunctionTok{summary}\NormalTok{(fit5)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = body_mass ~ sex * binomial, data = delomys)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -43.884  -8.884  -0.647   8.945  64.353 
+## 
+## Coefficients:
+##                                     Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)                         45.05546    0.60530  74.435  < 2e-16 ***
+## sexmale                              3.82809    0.89667   4.269 2.08e-05 ***
+## binomialDelomys sublineatus         -8.14174    1.12810  -7.217 8.22e-13 ***
+## sexmale:binomialDelomys sublineatus -0.09502    1.52859  -0.062     0.95    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 14.31 on 1576 degrees of freedom
+##   (5 observations deleted due to missingness)
+## Multiple R-squared:  0.07664,    Adjusted R-squared:  0.07488 
+## F-statistic:  43.6 on 3 and 1576 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\hypertarget{model-diagnostics}{%
+\subsection{Model Diagnostics}\label{model-diagnostics}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{5}\NormalTok{))}
+\FunctionTok{hist}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(fit1),}
+     \AttributeTok{main =} \StringTok{"Histogram of Residuals from Fit 1"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"Residuals"}\NormalTok{)}
+
+\FunctionTok{hist}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(fit2),}
+     \AttributeTok{main =} \StringTok{"Histogram of Residuals from Fit 2"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"Residuals"}\NormalTok{)}
+
+\FunctionTok{hist}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(fit3),}
+     \AttributeTok{main =} \StringTok{"Histogram of Residuals from Fit 3"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"Residuals"}\NormalTok{)}
+
+\FunctionTok{hist}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(fit4),}
+     \AttributeTok{main =} \StringTok{"Histogram of Residuals from Fit 4"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"Residuals"}\NormalTok{)}
+
+\FunctionTok{hist}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(fit5),}
+     \AttributeTok{main =} \StringTok{"Histogram of Residuals from Fit 5"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"Residuals"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{final_dataanalysis_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Shapiro{-}wilk normality tests on the residuals of the five above models:}
+\CommentTok{\#Fit 1:}
+\FunctionTok{shapiro.test}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(fit1))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  residuals(fit1)
+## W = 0.73462, p-value < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Fit 2:}
+\FunctionTok{shapiro.test}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(fit2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  residuals(fit2)
+## W = 0.99563, p-value = 0.0001541
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Fit 3:}
+\FunctionTok{shapiro.test}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(fit3))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  residuals(fit3)
+## W = 0.99535, p-value = 8.103e-05
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Fit 4:}
+\FunctionTok{shapiro.test}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(fit4))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  residuals(fit4)
+## W = 0.99525, p-value = 6.805e-05
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Fit 5}
+\FunctionTok{shapiro.test}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(fit5))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  residuals(fit5)
+## W = 0.99526, p-value = 6.816e-05
+\end{verbatim}
+
+\hypertarget{q5}{%
+\subsubsection{Q5}\label{q5}}
+
+Based on numerical and graphical diagnostics, it appears that none of
+the sets of residuals are normally distributed. A few of them look close
+in their histograms, but on further examination there's a clear skew,
+usually to the left. This is backed up in the shapiro tests, as four of
+the five model residuals carry very small p-values, and the closest (Fit
+2) still has a very small p-value.
+
+\hypertarget{q6}{%
+\subsubsection{Q6}\label{q6}}
+
+The violations of the normality assumption across all of these models
+are not equally severe. The first model is the most severe, as its
+histogram is very lopsided. The second is the lease, having the closest
+p-value to the 0.05 threshold where we would reject the null hypothesis.
+The other three, while severe, fall in the middle of the other two.
+
+\hypertarget{model-interpretation}{%
+\subsection{Model Interpretation}\label{model-interpretation}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Coefficient table for Fit 1 (body length and mass)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{coef}\NormalTok{(}\FunctionTok{summary}\NormalTok{(fit1)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrr@{}}
+\toprule
+& Estimate & Std. Error & t value &
+Pr(\textgreater\textbar t\textbar) \\
+\midrule
+\endhead
+(Intercept) & 76.1246565 & 0.9158120 & 83.12258 & 0 \\
+body\_mass & 0.8754988 & 0.0196905 & 44.46298 & 0 \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{q7}{%
+\subsubsection{Q7}\label{q7}}
+
+The magnitude of the relationship is 0.875
+
+\hypertarget{q8}{%
+\subsubsection{Q8}\label{q8}}
+
+The expected body length for an anumal that weighs 100g is 163.625 mm
+
+\hypertarget{q9}{%
+\subsubsection{Q9}\label{q9}}
+
+The expected body length for an animal that weighs 0g is 76.125 mm.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Coefficient table for Fit 2 (body mass and sex)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{coef}\NormalTok{(}\FunctionTok{summary}\NormalTok{(fit2)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrr@{}}
+\toprule
+& Estimate & Std. Error & t value &
+Pr(\textgreater\textbar t\textbar) \\
+\midrule
+\endhead
+(Intercept) & 42.711465 & 0.5288929 & 80.756355 & 0.0000000 \\
+sexmale & 2.784133 & 0.7456117 & 3.734024 & 0.0001951 \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Coefficient table for Fit 3 (body mass and species)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{coef}\NormalTok{(}\FunctionTok{summary}\NormalTok{(fit3)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrr@{}}
+\toprule
+& Estimate & Std. Error & t value &
+Pr(\textgreater\textbar t\textbar) \\
+\midrule
+\endhead
+(Intercept) & 46.752427 & 0.4499933 & 103.89582 & 0 \\
+binomialDelomys sublineatus & -7.683058 & 0.7604562 & -10.10322 & 0 \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Coefficient table for Fit 4 (additive, body mass and sex/species)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{coef}\NormalTok{(}\FunctionTok{summary}\NormalTok{(fit4)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrr@{}}
+\toprule
+& Estimate & Std. Error & t value &
+Pr(\textgreater\textbar t\textbar) \\
+\midrule
+\endhead
+(Intercept) & 45.070355 & 0.5556429 & 81.113891 & 0e+00 \\
+sexmale & 3.795395 & 0.7259609 & 5.228099 & 2e-07 \\
+binomialDelomys sublineatus & -8.193492 & 0.7609985 & -10.766764 &
+0e+00 \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Coefficient table for Fit 5 (factorial, body mass and sex/species)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{coef}\NormalTok{(}\FunctionTok{summary}\NormalTok{(fit5)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.41}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.12}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.12}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.12}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.22}}@{}}
+\toprule
+& Estimate & Std. Error & t value &
+Pr(\textgreater\textbar t\textbar) \\
+\midrule
+\endhead
+(Intercept) & 45.0554562 & 0.6052973 & 74.4352459 & 0.0000000 \\
+sexmale & 3.8280908 & 0.8966667 & 4.2692460 & 0.0000208 \\
+binomialDelomys sublineatus & -8.1417394 & 1.1281046 & -7.2171847 &
+0.0000000 \\
+sexmale:binomialDelomys sublineatus & -0.0950187 & 1.5285856 &
+-0.0621612 & 0.9504424 \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{q10}{%
+\subsubsection{Q10}\label{q10}}
+
+The base level for sex is female. In the one-way model on body mass and
+sex (Fit 2), this value is 42.7 grams.
+
+\hypertarget{q11}{%
+\subsubsection{Q11}\label{q11}}
+
+The base level for binomial (species) is Delomys dorsalis. In the
+one-way model for body mass and species (Fit 3), this value is 46.8
+grams.
+
+\hypertarget{q12}{%
+\subsubsection{Q12}\label{q12}}
+
+In these data, males are heavier across both species.
+
+\hypertarget{q13}{%
+\subsubsection{Q13}\label{q13}}
+
+In both the one-way and two-way models, Delomys dorsalis is the heavier
+species.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#ANOVA table for Fit 2 (body mass and sex)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{anova}\NormalTok{(fit2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule
+& Df & Sum Sq & Mean Sq & F value & Pr(\textgreater F) \\
+\midrule
+\endhead
+sex & 1 & 3061.678 & 3061.6779 & 13.94294 & 0.0001951 \\
+Residuals & 1578 & 346507.131 & 219.5863 & NA & NA \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#ANOVA table for Fit 3 (body mass and species)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{anova}\NormalTok{(fit3))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule
+& Df & Sum Sq & Mean Sq & F value & Pr(\textgreater F) \\
+\midrule
+\endhead
+binomial & 1 & 21289.68 & 21289.6805 & 102.0751 & 0 \\
+Residuals & 1583 & 330164.45 & 208.5688 & NA & NA \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#ANOVA table for Fit 4 (additive, body mass and sex/species)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{anova}\NormalTok{(fit4))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule
+& Df & Sum Sq & Mean Sq & F value & Pr(\textgreater F) \\
+\midrule
+\endhead
+sex & 1 & 3061.678 & 3061.6779 & 14.95838 & 0.0001144 \\
+binomial & 1 & 23727.134 & 23727.1342 & 115.92320 & 0.0000000 \\
+Residuals & 1577 & 322779.997 & 204.6798 & NA & NA \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#ANOVA table for Fit 5 (factorial, body mass and sex/species)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{anova}\NormalTok{(fit5))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule
+& Df & Sum Sq & Mean Sq & F value & Pr(\textgreater F) \\
+\midrule
+\endhead
+sex & 1 & 3.061678e+03 & 3.061678e+03 & 14.948932 & 0.0001150 \\
+binomial & 1 & 2.372713e+04 & 2.372713e+04 & 115.849977 & 0.0000000 \\
+sex:binomial & 1 & 7.913846e-01 & 7.913846e-01 & 0.003864 & 0.9504424 \\
+Residuals & 1576 & 3.227792e+05 & 2.048091e+02 & NA & NA \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{q14}{%
+\subsubsection{Q14}\label{q14}}
+
+Because the p-values in fit 2 and fit 3 are very small, there is
+evidence to suggest that the population means are not equal and that
+species and sex are significant predictors of body mass.
+
+\hypertarget{q15}{%
+\subsubsection{Q15}\label{q15}}
+
+The p-values in the interactive model are also very small, meaning there
+is significant interaction.
+
+\hypertarget{q16}{%
+\subsubsection{Q16}\label{q16}}
+
+The significance of the single-predictor models is lower than that of
+the additive model, which is itself lower than that of the interactive
+model.
+
+\hypertarget{model-comparison-body-mass}{%
+\subsection{Model Comparison: Body
+Mass}\label{model-comparison-body-mass}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Comparing the AIC of each model of body mass to find the best one}
+
+\CommentTok{\#Fit 2:}
+\FunctionTok{AIC}\NormalTok{(fit2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 13006.8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Fit 3:}
+\FunctionTok{AIC}\NormalTok{(fit3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 12966.36
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Fit 4:}
+\FunctionTok{AIC}\NormalTok{(fit4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 12896.73
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Fit 5:}
+\FunctionTok{AIC}\NormalTok{(fit5)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 12898.72
+\end{verbatim}
+
+\hypertarget{q17}{%
+\subsubsection{Q17}\label{q17}}
+
+The additive and interactive models (4 and 5) have the lowest AICs, with
+Fit 5 having the lowest.
+
+\hypertarget{q18}{%
+\subsubsection{Q18}\label{q18}}
+
+I would select Fit 5 as the best model to demonstrate this relationship.
+It's the most complex model here, but I think it still demonstrates the
+clearest case, as it separates the sex and species of the animals and
+displays their interaction. It's much more apparent that there are
+differences in the data with the interactive model than there are with
+any of the other models, especially with the single-predictor ones. I do
+think that it's more difficult to understand, but in my opinion it's
+worth it to have a more complex model to better demonstrate the
+relationship in this case.
+
+\end{document}

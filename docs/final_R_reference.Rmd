@@ -1,0 +1,345 @@
+---
+title: "Final Project - R"
+author: "Pete Crump"
+date: "12/2/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# R Reference Guide {.tabset .tabset-pills}
+
+## Loading Data and Packages
+
+### library()
+The library() function loads a specified R package into memory, making it available to reference in the current workspace. If the package is already loaded, library() will re-load it.
+```{r}
+#Using library() to load the palmerpenguins dataset
+library(palmerpenguins)
+```
+### require()
+The require() function operates very similarly to library(), as it loads a specified package into memory. However, require() will not re-load the package every time -  it will check if the package has been loaded already, and if it has, it won't re-load it. In general, it can save time to use require(), as it will not re-load a package every time a script is run.
+```{r}
+#Using require() to load the palmerpenguins dataset
+require(palmerpenguins)
+```
+### here()
+The here() data package and funciton tells R where to look within the current R project. It is useful when loading data files into the workspace for reference, and is often used in conjunction with read.csv(). Its argunemts are the name of the folder (within the current R project) containing the desired file, and the file name:
+```{r}
+#Loading and using the here() package
+require(here)
+here("data", "ginkgo_data_2021.csv")
+```
+
+### read.csv()
+The read.csv() function loads .csv files located within the current R Project and assigns them to a data frame variable. It can easily be used with the here() function. The head() function can be used to view the first few rows of a data frame, as well:
+```{r}
+#Loading the ginkgo dataset using read.csv() and here()
+ginkgo = read.csv(here("data", "ginkgo_data_2021.csv"))
+
+#Show the first six rows of 'ginkgo' data frame
+head(ginkgo)
+```
+
+## Data Structures
+
+### c()
+The function c() combines or concatenates its arguments into a vector (a 1-dimensional data structure consisting of 1 or more elements).
+
+* All of the elements must be of the same type.
+* I can’t combine character and numeric types in the same call to c()
+
+Here’s two examples using numeric and character data types:
+
+```{r}
+## Create a vector of numbers:
+num_vec  = c(1, 4, 8, 9, 13)
+
+## Create a vector of characters:
+char_vec = c("a", "fish", "data is cool")
+```
+I can show the contents of a vector by typing the name of the vector, or using the print() function.
+
+```{r}
+## Typing the name of the vector into the console prints the contents
+num_vec
+```
+```{r}
+## The print() function accomplishes the same task:
+print(char_vec)
+```
+
+### length()
+The length() function is used to get the length of a vector, data frame, or other factor:
+```{r}
+#Create a vector of names
+roommates = c("Pete", "Jason", "Brian", "Chris")
+
+#Get the length of 'roommates'
+length(roommates)
+```
+
+### matrix()
+The function matrix() creates a matrix of a given set of values.
+
+* nrow corresponds to the desired number of rows
+* ncol corresponds to the desired number of columns
+* byrow is an argument that specifies whether to fill by rows or columns (the default is FALSE to fill by columns)
+
+```{r}
+#Creating a matrix of the values 1-6 with two rows and three columns, and organizing the data by rows:
+my_matrix = matrix(c(1, 2, 3, 4, 5, 6), nrow = 2, ncol = 3, byrow = TRUE)
+my_matrix
+```
+
+### Data Frames
+
+In R, a data frame is a table of data points that can be used to perform analyses. They can be built from scratch using R, or the user can load their own datasets into R and organize it into a data frame. They can be made using a few different methods:
+
+* The data.frame() function, which can build a new data frame from scratch, or
+* loading existing datasets into R using read.csv() (see: "Loading Data Packages")
+```{r}
+#Creating a data frame using data.frame():
+df = data.frame(my_matrix)
+df
+```
+```{r}
+#Loading a .csv file into a data frame using R:
+require(here)
+ginkgo = read.csv(here("data", "ginkgo_data_2021.csv"))
+head(ginkgo)
+```
+
+### Data Frame Characteristics
+There are several functions in R that the user can call to specify certain characteristics of a data frame. They include:
+
+* nrow(): Returns the number of rows in the data frame.
+* ncol(): Returns the number of columns in the data frame.
+* dim(): Returns the dimensions of the data frame, as the number of rows followed by the number of columns.
+
+```{r}
+#Return the number of rows in the 'ginkgo' data frame:
+nrow(ginkgo)
+#Return the number of columns in the 'ginkgo' data frame:
+ncol(ginkgo)
+#Return the dimensions of the 'ginkgo' data frame:
+dim(ginkgo)
+```
+
+## Subsetting
+
+### Subsetting by Name
+You can use the $ operator to subset a data frame by a column in that data frame. This will extract one column from the data frame and create a vector with that data:
+```{r}
+#Subsetting data frame by name and creating a vector with one column:
+petiole_length = ginkgo$petiole_length
+#Printing a few values from the new petiole_length vector:
+head(petiole_length)
+```
+### Subsetting by Position
+You can use brackets [] to select a specific row, column, or element of a data frame.
+Some tips:
+
+* The brackets use a row and column selection system, with the row coming first and the column separated by a comma
+* To select an element, specify a row and column separated by a comma.
+* To select only a row, specify the intended row with just a comma after. Do not specify a column.
+* To select only a column, begin with a comma (do not specify a row) and specify the intended column.
+
+```{r}
+#Selecting the first row of the 'ginkgo' data frame:
+ginkgo[1,]
+
+#Selecting the element in the second row, third column of the 'ginkgo' data frame:
+ginkgo[2,3]
+
+#Selecting the third column of the 'ginkgo' data frame:
+head(ginkgo[,3])
+
+```
+### Subsetting by Attributes
+You can use the subset() function to extract all data from a dataset pertaining to a specific attribute:
+```{r}
+#Loading the Palmer Penguins dataset and retrieving all data pertaining to Adelie penguins.
+require(palmerpenguins)
+dat_adelie = subset(penguins, species = 'Adelie')
+head(dat_adelie)
+```
+
+## Numerical Data Exploration
+
+### Summary
+The summary() function shows the five-number summary for the specified data:
+```{r}
+#Generating a five-number summary for bill length of the Adelie Penguins dataset:
+summary(dat_adelie$bill_length_mm)
+```
+
+### Mean
+The mean() function returns the average value of the specified data:
+```{r}
+#Generating the mean value of the bill length of the Adelie Penguins:
+mean(dat_adelie$flipper_length_mm)
+```
+
+### Standard Deviation
+The sd() function returns the standard deviation of the specified data:
+```{r}
+sd(dat_adelie$bill_length_mm)
+```
+
+## Graphical Data Exploration
+
+### Scatterplots
+Scatterplots are a very useful tool to visualize data in R, and can be used for many different purposes. They can be created in r using the plot() function, and are very customizable, as there are several arguments that can be used to alter the plots and change the way they look:
+
+* col: A string value that corresponds to the intended color of the data representation. There exists a wide variety of colors, with thousands of different values. A useful guide to plot colors in R can be found [here](https://www.nceas.ucsb.edu/sites/default/files/2020-04/colorPaletteCheatsheet.pdf).
+* pch: An integer value that corresponds to the shape of the data points. There are several different symbols with different values, and a guide to some of which can be found at [this link](http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r).
+* cex: An integer value that corresponds to the point size of the data points.
+* main: A string value for the title of the plot.
+* xlab and ylab: A string value for the label for the x- and y-axis of the plot
+* \n: A symbol for a new line. Adding this to the string value for main, xlab, or ylab will break the string and put it on two separate lines. Using this is great for improving the readability and overall look of the plot.
+* xlim and ylim: A vector value setting the numerical range of each axis on the plot.
+```{r}
+#Example plot relating maximum width and maximum depth in the ginkgo dataset collected by the class.
+plot(
+  x = ginkgo$max_depth,
+  y = ginkgo$max_width,
+  main = "Plot of Maximim Width vs. Maximum Depth\nin Ginkgo Leaves",
+  xlab = "Max Depth (mm)", ylab = "Max Width (mm)",
+  pch = 19,
+  col = "purple",
+  cex = 0.5,
+  xlim = range(20, 140), ylim = range(20, 120))
+```
+
+### Histograms
+Histograms are another powerful tool in data visualization in R. They take the same arguments as specified above for labels (main, xlab, and ylab) as well as color. In addition to this, they use the 'breaks' argument:
+
+* breaks: A numerical value that specifies the number of breaks, or bins, present in the histogram.
+
+```{r}
+#Example histogram with 25 breaks using the Palmer Penguins dataset
+hist(
+  x = penguins$flipper_length_mm,
+  breaks = 25,
+  main = "Histogram of Penguin Flipper Lengths",
+  xlab = "Flipper Length (mm)",
+  col = "skyblue"
+)
+```
+
+### Boxplots
+Boxplots (boxplot()) are yet another useful tool to represent data. They can be relatively simple, normal boxplots, or they can be conditioned on a variable to produce conditional boxplots. Included below are two examples of boxplots, using the ginkgo leaf data collected by the class.
+```{r}
+#Simple boxplot of ginkgo leaf petiole lengths
+boxplot(
+  x = ginkgo$petiole_length,
+  main = "Boxplot of Ginkgo Leaf Petiole Lenghts",
+  ylab = "Petiole Length (mm)"
+)
+
+#Boxplot of ginkgo leaf width conditioned on the 'seeds_present' column.
+boxplot(
+  data = ginkgo, max_width ~ seeds_present,
+  main = "Conditional Boxplot of Ginkgo Leaf Width\nAccording to the Presence of Seeds",
+  xlab = "Seed Presence",
+  ylab = "Max Width (mm)"
+)
+```
+
+### Graphical Data Arrangement
+There are a few commands that can be used in R to display multiple graphs at once. They include:
+
+* par(): a function that allows us to display graphs in an array format. Used in juction with mfrow(), we can specify the arrangement of the array.
+* mfrow: a function that takes a vector specifying the dimensions of an array and displays several graphs in that array.
+
+```{r fit.width = 20}
+#Creating an arrangement of four histograms displaying information pertaining to ginkgo leaves collected around campus:
+par(mfrow = c(2,2))
+hist(ginkgo$max_width,
+     main = "Histogram of Ginkgo Leaf Width",
+     xlab = "Width (mm)",
+     col = "orange3")
+hist(ginkgo$max_depth,
+     main = "Histogram of Ginkgo Leaf Depth",
+     xlab = "Depth (mm)",
+     col = "violetred3")
+hist(ginkgo$notch_depth,
+     main = "Histogram of Ginkgo Leaf Notch Depth",
+     xlab = "Depth (mm)",
+     col = "aquamarine4")
+hist(ginkgo$petiole_length,
+     main = "Histogram of Ginkgo Leaf Petiole Length",
+     xlab = "Length (mm)",
+     col = "slateblue2")
+```
+
+## Distribution Functions
+
+### Normal Distribution Functions
+
+The normal distribution is a continuous probability distribution of a variable. It has a familiar bell shape and has two parameters - the mean (mu) and standard deviation (sigma). The mean corresponds to the location of the data along an axis, and the standard deviation dictates the spread of the data, or how sharp the peak of the distribution is. More on the normal distribution can be found [here](https://mathworld.wolfram.com/NormalDistribution.html).
+
+#### dnorm
+The density function for the normal distribution. Its arguments specify the mean and standard deviation of the distribution, and it returns the value of the normal density function for the specified arguments.
+```{r}
+dnorm(x = -2, mean = 0, sd = 1)
+```
+
+#### pnorm
+The cumulative density function and probability function for the normal distribuiton. It takes the same arguments as dnorm (x, mean, standard deviation), and returns the probability, along the normal function, that a random value is less than the value specified.
+
+* For example: In a population of penguins with normally distributed body masses, a mean of 3.41 kg, and a standard deviation of 0.39 kg, what is the probability of any given penguin having a body mass less than 2.75 kg?
+```{r}
+pnorm(2.75, mean = 3.41, sd = 0.39)
+```
+
+#### qnorm
+The inverse cumulative density function and quantile function for the normal distribution. Like dnorm and pnorm, it takes a mean and standard deviation as arguments, but the x value should be a number between 0 and 1. Since the quantile function is also known as the percentile function, the user should input a percent and the function will return the value that that percent of all values in the distribution will be smaller than.
+
+* For example: In a fish population with normally distributed body lengths, a mean of 43 cm, and a standard deviation of 4.1 cm, what length will 90% of the fish be shorter than?
+```{r}
+qnorm(0.90, mean = 43, sd = 4.1)
+```
+
+...
+
+### Binomial Distribution Functions
+
+The binomial distribution is a collection of individual Bernoulli trials. Each trial has the same probability of success (success being a binary outcome of either presence or absence of a given event), and there is a specified number of trials. Thus, the binomial distribution has two parameters - n and p. The sample space in the binomial distribution has a size of n+1, as it's possible to have 0 successes. Finally, there's a finite, countable number of trials and successes in the process.
+
+#### dbinom
+The density function for the binomial distribution. dbinom finds the probability of getting a certain number of successes given the specified parameters for n and p.
+```{r}
+dbinom(x = 6, size = 10, prob = 0.5)
+```
+
+#### pbinom
+pbinom refers to the cumulative densito function of the binomial distribution. It refers the the probability of getting less than the specified number of sucesses given the specified parameters.
+
+* For example: If you were to flip a coin 20 times, what is the probability of getting less than 7 heads?
+```{r}
+pbinom(7, size = 20, prob = 0.5)
+```
+
+You can also subtract from 1 to get the probability of a greater number of successes.
+
+* Note that this will return the probability of *the specified number of successes or greater*.
+```{r}
+1 - pbinom(7, size = 20, prob = 0.5)
+```
+
+Finally, you can include the argument 'lower.tail = FALSE' to achieve the same result as above.
+```{r}
+pbinom(7, size = 20, prob = 0.5, lower.tail = FALSE)
+```
+
+#### qbinom
+The quantile function for the binomial distribution. It's a sort of inverse for the cumulative density function, and can be used to find the Qth quantile for a specified value Q.
+
+* For example: I flipped a coin 20 times, and 13.1588% of the flips resulted in 'heads.' How many 'heads' did I get?
+```{r}
+qbinom(0.131588, size = 20, prob = 0.5)
+```
+
